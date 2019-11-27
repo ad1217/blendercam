@@ -111,13 +111,13 @@ class CreatorMakerbotHBP(iso_modal.CreatorIsoModal):
 ################################################################################
 # tool info
     def tool_change(self, id):
-    	pass
-     #	self.write_blocknum()
+        pass
+     #    self.write_blocknum()
      #  self.write((maker.codes.TOOL() % id) + '\n')
      #  self.t = id
 
     def tool_defn(self, id, name='', params=None):
-	pass
+    pass
 ############################################################################
 ##  Moves
 

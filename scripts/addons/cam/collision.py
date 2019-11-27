@@ -10,7 +10,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -275,7 +275,7 @@ def getSampleBulletNAxis(cutter, startpoint, endpoint, rotation, cutter_compensa
         res = pos / BULLET_SCALE - cutterVec / BULLET_SCALE
         # this is a debug loop that duplicates the cutter on sampling positions, to see where it was moving...
         # if random.random()<0.01:
-        #	dupliob(cutter,res)
+        #    dupliob(cutter,res)
 
         return res
     else:

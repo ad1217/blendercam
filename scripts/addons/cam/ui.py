@@ -10,7 +10,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -202,7 +202,7 @@ class CAM_UL_orientations(UIList):
             layout.label(text=item.name, translate=False, icon_value=icon)
         # icon = 'LOCKED' if operation.computing else 'UNLOCKED'
         # if operation.computing:
-        #	layout.label(text=operation.outtext)#"computing" )
+        #    layout.label(text=operation.outtext)#"computing" )
         elif self.layout_type in {'GRID'}:
             layout.alignment = 'CENTER'
             layout.label(text="", icon_value=icon)
@@ -436,8 +436,8 @@ class CAM_OPERATION_PROPERTIES_Panel(CAMButtonsPanel, bpy.types.Panel):
                         return
                     '''
                 # elif o.type=='CURVE' and (ao.strategy!='CARVE' and ao.strategy!='POCKET' and ao.strategy!='DRILL' and ao.strategy!='CUTOUT'):
-                #	 layout.label(text='Not supported for curves')
-                #	 return
+                #     layout.label(text='Not supported for curves')
+                #     return
 
                 if ao.strategy == 'CUTOUT':
                     layout.prop(ao, 'cut_type')
@@ -495,12 +495,12 @@ class CAM_OPERATION_PROPERTIES_Panel(CAMButtonsPanel, bpy.types.Panel):
                         layout.prop(ao, 'use_bridge_modifiers')
                     # layout.prop(ao,'bridges_group_name')
                     # if ao.bridges_placement == 'AUTO':
-                    #	layout.prop(ao,'bridges_per_curve')
-                    #	layout.prop(ao,'bridges_max_distance')
+                    #    layout.prop(ao,'bridges_per_curve')
+                    #    layout.prop(ao,'bridges_max_distance')
                     layout.operator("scene.cam_bridges_add", text="Autogenerate bridges")
 
             # elif ao.strategy=='SLICES':
-            #	layout.prop(ao,'slice_detail')
+            #    layout.prop(ao,'slice_detail')
             # first attempt to draw object list for orientations:
             # layout.operator("object.cam_pack_objects")
             # layout.operator("scene.cam_orientation_add")
@@ -509,11 +509,11 @@ class CAM_OPERATION_PROPERTIES_Panel(CAMButtonsPanel, bpy.types.Panel):
             layout.prop(ao, 'skin')
 
             # if gname in bpy.data.groups:
-            #	layout.label(text='orientations')
-            #	group=bpy.data.groups[ao.name+'_orientations']
-            #	layout.template_list("CAM_UL_orientations", '', group, "objects", ao, 'active_orientation')
-            #	layout.prop(group.objects[ao.active_orientation],'location')
-            #	layout.prop(group.objects[ao.active_orientation],'rotation_euler')
+            #    layout.label(text='orientations')
+            #    group=bpy.data.groups[ao.name+'_orientations']
+            #    layout.template_list("CAM_UL_orientations", '', group, "objects", ao, 'active_orientation')
+            #    layout.prop(group.objects[ao.active_orientation],'location')
+            #    layout.prop(group.objects[ao.active_orientation],'rotation_euler')
             if ao.machine_axes == '3':
                 layout.prop(ao, 'array')
                 if ao.array:

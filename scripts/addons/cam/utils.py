@@ -10,7 +10,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -474,7 +474,7 @@ def sampleChunks(o, pathSamples, layers):
                     #  z=layerstart
                     z = getSampleImage((xs, ys), o.offset_image, minz) + o.skin
                 # if minz>z and o.ambient.isInside(x,y):
-                #	z=minz;
+                #    z=minz;
                 ################################
                 # handling samples
                 ############################################
@@ -485,10 +485,10 @@ def sampleChunks(o, pathSamples, layers):
             # z=max(minz,z)
 
             # if sampled:# and (not o.inverse or (o.inverse)):uh what was this? disabled
-            #	newsample=(x,y,z)
+            #    newsample=(x,y,z)
 
             # elif o.ambient_behaviour=='ALL' and not o.inverse:#handle ambient here, this should be obsolete,
-            #	newsample=(x,y,minz)
+            #    newsample=(x,y,minz)
             for i, l in enumerate(layers):
                 terminatechunk = False
 
@@ -742,7 +742,7 @@ def sampleChunksNAxis(o, pathSamples, layers):
                                 # v1=lastsample
                                 # v2=newsample
                                 # if o.protect_vertical:#different algo for N-Axis! need sto be perpendicular to or whatever.
-                                #	v1,v2=isVerticalLimit(v1,v2,o.protect_vertical_limit)
+                                #    v1,v2=isVerticalLimit(v1,v2,o.protect_vertical_limit)
                                 # v1=Vector(v1)
                                 # v2=Vector(v2)
                                 # print(v1,v2)
@@ -818,7 +818,7 @@ def sampleChunksNAxis(o, pathSamples, layers):
                                 layeractivechunks[i]=camPathChunk([])
                     '''
             # else:
-            #	terminatechunk=True
+            #    terminatechunk=True
             lastsample = newsample
             lastrotation = rotation
             laststartpoint = startp
@@ -1328,7 +1328,7 @@ def exportGcodePath(filename, vertslist, operations):
                 else:
                     rb = r.y * rotcorr
             # rb=r.y*rotcorr
-            # print (	ra,rb)
+            # print (    ra,rb)
 
             if vi > 0 and v.x == last.x:
                 vx = None;
@@ -1601,7 +1601,7 @@ def sortChunks(chunks, o):
     i = len(chunks)
     pos = (0, 0, 0)
     # for ch in chunks:
-    #	ch.getNext()#this stores the unsortedchildren properties
+    #    ch.getNext()#this stores the unsortedchildren properties
     # print('numofchunks')
     # print(len(chunks))
     while len(chunks) > 0:
@@ -1613,17 +1613,17 @@ def sortChunks(chunks, o):
             # get siblings here
             # siblings=[]
             # for chs in lastch.parents:
-            #	siblings.extend(chs.children)
+            #    siblings.extend(chs.children)
             # ch = getClosest(o,pos,siblings)
             # if ch==None:
-            #	ch = getClosest(o,pos,chunks)
+            #    ch = getClosest(o,pos,chunks)
             for parent in lastch.parents:
                 ch = parent.getNextClosest(o, pos)
                 if ch != None:
                     break
             if ch == None:
                 ch = getClosest(o, pos, chunks)
-        #	break
+        #    break
         # pass;
         if ch is not None:  # found next chunk, append it to list
             # only adaptdist the chunk if it has not been sorted before
@@ -1667,7 +1667,7 @@ def getVectorRight(lastv, verts):  # most right vector from a set regarding angl
             vb = Vector(v) - v2
             a = va.angle_signed(Vector(vb))
             # if a<=0:
-            #	a=2*pi+a
+            #    a=2*pi+a
 
             if a < defa:
                 defa = a
@@ -1803,7 +1803,7 @@ def getObjectSilhouete(stype, objects=None, use_modifiers=False):
                     n.rotate(r)
                     # verts=[]
                     # for i in f.vertices:
-                    #	verts.append(mw*m.vertices[i].co)
+                    #    verts.append(mw*m.vertices[i].co)
                     # n=mathutils.geometry.normal(verts[0],verts[1],verts[2])
                     if tri.area > 0 and n.z != 0:  # n.z>0.0 and f.area>0.0 :
                         s = []
@@ -1820,7 +1820,7 @@ def getObjectSilhouete(stype, objects=None, use_modifiers=False):
                                 # polys.append(p)
                                 polys.append(p.buffer(e, resolution=0))
                         # if id==923:
-                        #	m.polygons[923].select
+                        #    m.polygons[923].select
                         id += 1
                 if use_modifiers:
                     bpy.data.meshes.remove(m)
@@ -1872,7 +1872,7 @@ def getAmbient(o):
                 polys = curveToShapely(limit_curve)
                 o.limit_poly = shapely.ops.unary_union(polys)
                 # for p in polys:
-                #	o.limit_poly+=p
+                #    o.limit_poly+=p
                 if o.ambient_cutter_restrict:
                     o.limit_poly = o.limit_poly.buffer(o.cutter_diameter / 2, resolution=o.circle_detail)
             o.ambient = o.ambient.intersection(o.limit_poly)
@@ -1906,7 +1906,7 @@ def getObjectOutline(radius, o, Offset):  # FIXME: make this one operation indep
     if o.dont_merge:
         outline = sgeometry.MultiPolygon(outlines)
     # for ci in range(0,len(p)):
-    #	outline.addContour(p[ci],p.isHole(ci))
+    #    outline.addContour(p[ci],p.isHole(ci))
     else:
         # print(p)
         outline = shapely.ops.unary_union(outlines)
@@ -2084,8 +2084,8 @@ def addAutoBridges(o):
     '''attempt to add auto bridges as set of curves'''
     getOperationSources(o)
     # if not o.onlycurves:
-    #	o.warnings+=('not curves')
-    #	return;
+    #    o.warnings+=('not curves')
+    #    return;
     bridgegroupname = o.bridges_group_name
     if bridgegroupname == '' or bpy.data.groups.get(bridgegroupname) == None:
         bridgegroupname = 'bridges_' + o.name
@@ -2199,11 +2199,11 @@ def useBridges(ch, o):
 
                     newpoints.append(chp1)
                 # elif startinside and endinside and itempty:
-                #	newpoints.append((chp1[0],chp1[1],max(chp1[2],bridgeheight)))
+                #    newpoints.append((chp1[0],chp1[1],max(chp1[2],bridgeheight)))
                 elif startinside:
                     newpoints.append((chp1[0], chp1[1], max(chp1[2], bridgeheight)))
                 # elif not startinside:
-                #	newpoints.append(chp1)
+                #    newpoints.append(chp1)
                 cpoints = []
                 if itpoint:
                     cpoints = [Vector((intersections.x, intersections.y, intersections.z))]
@@ -2321,7 +2321,7 @@ def strategy_cutout(o):
         chunksFromCurve = sortChunks(chunksFromCurve, o)
 
     # if o.outlines_count>0 and o.cut_type!='ONLINE' and o.movement_insideout=='OUTSIDEIN':#reversing just with more outlines
-    #	chunksFromCurve.reverse()
+    #    chunksFromCurve.reverse()
 
     if (o.movement_type == 'CLIMB' and o.spindle_rotation_direction == 'CCW') or (
             o.movement_type == 'CONVENTIONAL' and o.spindle_rotation_direction == 'CW'):
@@ -2411,7 +2411,7 @@ def strategy_proj_curve(s, o):
     if targetCurve.type != 'CURVE':
         o.warnings = o.warnings + 'Projection target and source have to be curve objects!\n '
         return
-    '''	#mesh method is highly unstable, I don't like itwould be there at all.... better to use curves.
+    '''    #mesh method is highly unstable, I don't like itwould be there at all.... better to use curves.
     if targetCurve.type=='MESH':
 
         c=targetCurve
@@ -2462,7 +2462,7 @@ def strategy_proj_curve(s, o):
 
     chunks.extend(sampleChunksNAxis(o, pathSamples, layers))
     # for ch in pathSamples:
-    #	ch.points=ch.endpoints
+    #    ch.points=ch.endpoints
     chunksToMesh(chunks, o)
 
 
@@ -2959,8 +2959,8 @@ def getPath3axis(context, operation):
             getAmbient(o)
             pathSamples = getOffsetImageCavities(o, o.offset_image)
             # for ch in pathSamples:
-            #	for i,p in enumerate(ch.points):
-            #	 ch.points[i]=(p[0],p[1],0)
+            #    for i,p in enumerate(ch.points):
+            #     ch.points[i]=(p[0],p[1],0)
             pathSamples = limitChunks(pathSamples, o)
             pathSamples = sortChunks(pathSamples, o)  # sort before sampling
         elif o.strategy == 'CRAZY':

@@ -218,7 +218,7 @@ class Parser(nc.Parser):
                         self.add_lathe_increment_line(u,w)
 
                     else     : self.add_line(x, y, z, a, b, c)
-   	            self.end_path()
+                   self.end_path()
 
             self.end_ncblock()
 

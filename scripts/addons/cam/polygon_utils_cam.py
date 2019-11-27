@@ -10,7 +10,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -34,7 +34,7 @@ SHAPELY = True
 
 
 # except:
-#	SHAPELY=False
+#    SHAPELY=False
 
 def Circle(r, np):
     c = []
@@ -136,7 +136,7 @@ def shapelyToCoords(anydata):
                 seq.extend(interior.coords)
 
     # for g in p.geom:
-    #	print(g.type)
+    #    print(g.type)
 
     return seq
 

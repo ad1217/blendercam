@@ -32,11 +32,11 @@ class CreatorEMC2tap(emc2.CreatorEMC2):
             # This is a bad thing.  All the drilling cycles need a retraction (and starting) height.
             return
         if (z == None):
-            return	# We need a Z value as well.  This input parameter represents the top of the hole
+            return    # We need a Z value as well.  This input parameter represents the top of the hole
         if (pitch == None):
-            return	# We need a pitch value.
+            return    # We need a pitch value.
         if (direction == None):
-            return	# We need a direction value.
+            return    # We need a direction value.
 
         if (tap_mode != 0):
             self.comment('only rigid tapping currently supported')
@@ -73,7 +73,7 @@ class CreatorEMC2tap(emc2.CreatorEMC2):
         self.write_blocknum()
         self.write( iso_codes.codes.TAP() )
         self.write( iso_codes.codes.TAP_DEPTH(self.ffmt,pitch) + iso_codes.codes.SPACE() )
-        self.write(iso_codes.codes.Z() + (self.fmt % (z - depth)))	# This is the 'z' value for the bottom of the tap.
+        self.write(iso_codes.codes.Z() + (self.fmt % (z - depth)))    # This is the 'z' value for the bottom of the tap.
         self.write_misc()
         self.write('\n')
 

@@ -67,8 +67,8 @@ class Parser:
     def set_tool(self, number=None):
         self.file_out.write('\t\t<tool')
         if (number != None) :
-		self.file_out.write(' number="'+str(number)+'"')
-        	self.file_out.write(' />\n')
+        self.file_out.write(' number="'+str(number)+'"')
+            self.file_out.write(' />\n')
 
     def begin_path(self, col=None):
         if (col != None) : self.file_out.write('\t\t<path col="'+col+'">\n')

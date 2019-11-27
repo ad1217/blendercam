@@ -118,9 +118,9 @@ def timer_update(context):
 # doesn't effect normal path calculation when commented out
 # maybe this should only be enabled when when background calc selected
 # if bpy.context.screen!=None:
-#	for area in bpy.context.screen.areas:
-#		if area.type == 'PROPERTIES':
-#			area.tag_redraw()
+#    for area in bpy.context.screen.areas:
+#        if area.type == 'PROPERTIES':
+#            area.tag_redraw()
 
 class PathsBackground(bpy.types.Operator):
     '''calculate CAM paths in background. File has to be saved before.'''
@@ -132,7 +132,7 @@ class PathsBackground(bpy.types.Operator):
 
     # @classmethod
     # def poll(cls, context):
-    #	return context.active_object is not None
+    #    return context.active_object is not None
 
     def execute(self, context):
         s = bpy.context.scene
@@ -380,8 +380,8 @@ class CAMSimulate(bpy.types.Operator):
         operation = s.cam_operations[s.cam_active_operation]
 
         # if operation.geometry_source=='OBJECT' and operation.object_name in bpy.data.objects and #bpy.data.objects[operation.object_name].type=='CURVE':
-        #	print('simulation of curve operations is not available')
-        #	return {'FINISHED'}
+        #    print('simulation of curve operations is not available')
+        #    return {'FINISHED'}
 
         operation_name = "cam_path_{}".format(operation.name)
 
@@ -557,7 +557,7 @@ def fixUnits():
     s = bpy.context.scene
     # dhull: leave unit settings alone - may also need to comment out scale_length below
     # if s.unit_settings.system=='NONE':#metric is hereby default
-    #	s.unit_settings.system='METRIC'
+    #    s.unit_settings.system='METRIC'
 
     s.unit_settings.system_rotation = 'DEGREES'
 
@@ -863,9 +863,9 @@ class CamCurveOvercuts(bpy.types.Operator):
                             a = v1.angle_signed(v2)
                             sign = 1
                             # if ci==0:
-                            #	sign=-1
+                            #    sign=-1
                             # else:
-                            #	sign=1
+                            #    sign=1
 
                             if self.invert:  # and ci>0:
                                 sign *= -1

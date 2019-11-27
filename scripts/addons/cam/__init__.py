@@ -10,7 +10,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -341,7 +341,7 @@ def updateCutout(o, context):
 
 
 # if o.outlines_count>1:
-#	o.use_bridges=False
+#    o.use_bridges=False
 
 
 def updateExact(o, context):
@@ -661,7 +661,7 @@ class camOperation(bpy.types.PropertyGroup):
                                    description="Radius around the part which will be milled if ambient is set to Around",
                                    min=0.0, max=100.0, default=0.01, precision=PRECISION, unit="LENGTH",
                                    update=updateRest)
-    # ambient_cutter = EnumProperty(name='Borders',items=(('EXTRAFORCUTTER', 'Extra for cutter', "Extra space for cutter is cut around the segment"),('ONBORDER', "Cutter on edge", "Cutter goes exactly on edge of ambient with it's middle") ,('INSIDE', "Inside segment", 'Cutter stays within segment')	 ),description='handling of ambient and cutter size',default='INSIDE')
+    # ambient_cutter = EnumProperty(name='Borders',items=(('EXTRAFORCUTTER', 'Extra for cutter', "Extra space for cutter is cut around the segment"),('ONBORDER', "Cutter on edge", "Cutter goes exactly on edge of ambient with it's middle") ,('INSIDE', "Inside segment", 'Cutter stays within segment')     ),description='handling of ambient and cutter size',default='INSIDE')
     use_limit_curve: bpy.props.BoolProperty(name="Use limit curve", description="A curve limits the operation area",
                                              default=False, update=updateRest)
     ambient_cutter_restrict: bpy.props.BoolProperty(name="Cutter stays in ambient limits",

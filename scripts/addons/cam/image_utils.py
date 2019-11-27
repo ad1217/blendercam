@@ -10,7 +10,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -246,14 +246,14 @@ def offsetArea(o, samples):
                                   comparearea, comparearea)
                     # contest of performance
                     '''
-					if bpy.app.debug_value==0 :#original
-						comparearea=numpy.maximum(sourceArray[  x : width-cwidth+x ,y : height-cwidth+y]+cutterArray[x,y],comparearea)
-					elif bpy.app.debug_value==1:
-						narea = numpy.maximum(sourceArray[  x : width-cwidth+x ,y : height-cwidth+y]+cutterArray[x,y],comparearea)
-						comparearea = narea
-					elif bpy.app.debug_value==3:
-						numpy.maximum(sourceArray[  x : width-cwidth+x ,y : height-cwidth+y]+cutterArray[x,y],comparearea, comparearea)
-						'''
+                    if bpy.app.debug_value==0 :#original
+                        comparearea=numpy.maximum(sourceArray[  x : width-cwidth+x ,y : height-cwidth+y]+cutterArray[x,y],comparearea)
+                    elif bpy.app.debug_value==1:
+                        narea = numpy.maximum(sourceArray[  x : width-cwidth+x ,y : height-cwidth+y]+cutterArray[x,y],comparearea)
+                        comparearea = narea
+                    elif bpy.app.debug_value==3:
+                        numpy.maximum(sourceArray[  x : width-cwidth+x ,y : height-cwidth+y]+cutterArray[x,y],comparearea, comparearea)
+                        '''
 
         o.offset_image[m: width - cwidth + m, m:height - cwidth + m] = comparearea
         # progress('offseting done')
@@ -269,63 +269,63 @@ def offsetArea(o, samples):
 """
 deprecated function, currently not used anywhere inside blender CAM.
 def outlineImageBinary(o,radius,i,offset):
-	'''takes a binary image, and performs offset on it, something like delate/erode, just with circular patter. The oldest offset solution in Blender CAM. '''
-	t=time.time()
-	progress('outline image')
-	r=ceil(radius/o.pixsize)
-	c=getCircleBinary(r)
-	w=len(i)
-	h=len(i[0])
-	oar=i.copy()
-	#oar.fill(-10000000)
+    '''takes a binary image, and performs offset on it, something like delate/erode, just with circular patter. The oldest offset solution in Blender CAM. '''
+    t=time.time()
+    progress('outline image')
+    r=ceil(radius/o.pixsize)
+    c=getCircleBinary(r)
+    w=len(i)
+    h=len(i[0])
+    oar=i.copy()
+    #oar.fill(-10000000)
 
-	ar = i[:,:-1] != i[:,1:]
-	indices1=ar.nonzero()
-	if offset:
-		dofunc=numpy.logical_or
-	else:
-		c=numpy.logical_not(c)
-		dofunc=numpy.logical_and
-	w=i.shape[0]
-	h=i.shape[1]
-	for id in range(0,len(indices1[0])):
-		a=indices1[0].item(id)
-		b=indices1[1].item(id)
-		if a>r and b>r and a<w-r and b<h-r:
-			#progress(oar.shape,c.shape)
-			oar[a-r:a+r,b-r:b+r]=dofunc(oar[a-r:a+r,b-r:b+r],c)
+    ar = i[:,:-1] != i[:,1:]
+    indices1=ar.nonzero()
+    if offset:
+        dofunc=numpy.logical_or
+    else:
+        c=numpy.logical_not(c)
+        dofunc=numpy.logical_and
+    w=i.shape[0]
+    h=i.shape[1]
+    for id in range(0,len(indices1[0])):
+        a=indices1[0].item(id)
+        b=indices1[1].item(id)
+        if a>r and b>r and a<w-r and b<h-r:
+            #progress(oar.shape,c.shape)
+            oar[a-r:a+r,b-r:b+r]=dofunc(oar[a-r:a+r,b-r:b+r],c)
 
-	ar=i[:-1,:]!=i[1:,:]
-	indices2=ar.nonzero()
-	for id in range(0,len(indices2[0])):
-		a=indices2[0].item(id)
-		b=indices2[1].item(id)
-		if a>r and b>r and a<w-r and b<h-r:
-			#progress(oar.shape,c.shape)
-			oar[a-r:a+r,b-r:b+r]=dofunc(oar[a-r:a+r,b-r:b+r],c)
-	progress(time.time()-t)
-	return oar
+    ar=i[:-1,:]!=i[1:,:]
+    indices2=ar.nonzero()
+    for id in range(0,len(indices2[0])):
+        a=indices2[0].item(id)
+        b=indices2[1].item(id)
+        if a>r and b>r and a<w-r and b<h-r:
+            #progress(oar.shape,c.shape)
+            oar[a-r:a+r,b-r:b+r]=dofunc(oar[a-r:a+r,b-r:b+r],c)
+    progress(time.time()-t)
+    return oar
 
 def outlineImage(o,radius,i,minz):
-	'''takes a binary image, and performs offset on it, something like delate/erode, just with circular patter. The oldest offset solution in Blender CAM. was used to add ambient to the operation in the image based method'''
-	minz=minz-0.0000001#correction test
-	t=time.time()
-	progress('outline image')
-	r=ceil(radius/o.pixsize)
-	c=getCircle(r,minz)
-	w=len(i)
-	h=len(i[0])
-	oar=i.copy()
-	#oar.fill(-10000000)
-	for a in range(r,len(i)-1-r):
-		for b in range(r,len(i[0])-1-r):
-			p1=i[a,b]
-			p2=i[a+1,b]
-			p3=i[a,b+1]
-			if p1<minz<p2 or p1>minz>p2 or p1<minz<p3 or p1>minz>p3:
-				oar[a-r:a+r,b-r:b+r]=numpy.maximum(oar[a-r:a+r,b-r:b+r],c)
-	progress(time.time()-t)
-	return oar
+    '''takes a binary image, and performs offset on it, something like delate/erode, just with circular patter. The oldest offset solution in Blender CAM. was used to add ambient to the operation in the image based method'''
+    minz=minz-0.0000001#correction test
+    t=time.time()
+    progress('outline image')
+    r=ceil(radius/o.pixsize)
+    c=getCircle(r,minz)
+    w=len(i)
+    h=len(i[0])
+    oar=i.copy()
+    #oar.fill(-10000000)
+    for a in range(r,len(i)-1-r):
+        for b in range(r,len(i[0])-1-r):
+            p1=i[a,b]
+            p2=i[a+1,b]
+            p3=i[a,b+1]
+            if p1<minz<p2 or p1>minz>p2 or p1<minz<p3 or p1>minz>p3:
+                oar[a-r:a+r,b-r:b+r]=numpy.maximum(oar[a-r:a+r,b-r:b+r],c)
+    progress(time.time()-t)
+    return oar
 """
 
 
@@ -604,7 +604,7 @@ def generateSimulationImage(operations, limits):
 
         # for i,co in enumerate(verts_rotations):#TODO: optimize this. this is just rewritten too many times...
         # print(r)
-        #	shapek.data[i].co=co
+        #    shapek.data[i].co=co
 
         totalvolume = 0.0
 
@@ -946,14 +946,14 @@ def crazyStrokeImage(
                     testvect.y = maxary - r
 
                 '''
-				if testlength>10:#weird test
-					indices1=ar.nonzero()
-					nchunk.append(indices1[0])
-					lastvec=Vector((1,0,0))
-					testvec=Vector((1,0,0))
-					testlength=r
-					success=True
-				'''
+                if testlength>10:#weird test
+                    indices1=ar.nonzero()
+                    nchunk.append(indices1[0])
+                    lastvec=Vector((1,0,0))
+                    testvec=Vector((1,0,0))
+                    testlength=r
+                    success=True
+                '''
                 rot.z = testangle
 
                 testvect.rotate(rot)
@@ -1155,17 +1155,17 @@ def crazyStrokeImageBinary(o, ar,
                         closest = abs(s[1] - optimalpix)
                 # print('closest',closest)
                 '''
-				v1=foundsolutions[0][0]
-				v2=foundsolutions[1][0]
-				pix1=foundsolutions[0][1]
-				pix2=foundsolutions[1][1]
-				if pix1 == pix2:
-					ratio=0.5
-				else:
-					ratio=((optimalpix-pix1)/(pix2-pix1))
-				print(v2,v1,pix1,pix2)
-				print(ratio)
-				'''
+                v1=foundsolutions[0][0]
+                v2=foundsolutions[1][0]
+                pix1=foundsolutions[0][1]
+                pix2=foundsolutions[1][1]
+                if pix1 == pix2:
+                    ratio=0.5
+                else:
+                    ratio=((optimalpix-pix1)/(pix2-pix1))
+                print(v2,v1,pix1,pix2)
+                print(ratio)
+                '''
                 testvect = bestsolution[0]  # v1#+(v2-v1)*ratio#rewriting with interpolated vect.
                 xs = int(nchunk.points[-1][0] + testvect.x)
                 ys = int(nchunk.points[-1][1] + testvect.y)
@@ -1217,17 +1217,17 @@ def crazyStrokeImageBinary(o, ar,
                     testvect.y = maxary - r
 
                 '''
-				if testlength>10:#weird test
-					indices1=ar.nonzero()
-					nchunk.append(indices1[0])
-					lastvec=Vector((1,0,0))
-					testvec=Vector((1,0,0))
-					testlength=r
-					success=True
-				'''
+                if testlength>10:#weird test
+                    indices1=ar.nonzero()
+                    nchunk.append(indices1[0])
+                    lastvec=Vector((1,0,0))
+                    testvec=Vector((1,0,0))
+                    testlength=r
+                    success=True
+                '''
                 rot.z = testangle
                 # if abs(testvect.normalized().y<-0.99):
-                #	print(testvect,rot.z)
+                #    print(testvect,rot.z)
                 testvect.rotate(rot)
 
                 if 0:
@@ -1267,18 +1267,18 @@ def crazyStrokeImageBinary(o, ar,
                             if xs < r: xs = r
                             if ys < r: ys = r
                             '''
-								avoidtest=avoidar[xs-r:xs+r,ys-r:ys+r]*cutterArray
-								asum=avoidtest.sum()
-								if asum>0:
-									cindices=avoidtest.nonzero()
-									cx=cindices[0].sum()/asum
-									cy=cindices[1].sum()/asum
-									v=Vector((cx-r,cy-r))
-									print(v,r)
-									v.length=max(1,r-v.length)
-									xs-=v.x
-									ys-=v.y
-								'''
+                                avoidtest=avoidar[xs-r:xs+r,ys-r:ys+r]*cutterArray
+                                asum=avoidtest.sum()
+                                if asum>0:
+                                    cindices=avoidtest.nonzero()
+                                    cx=cindices[0].sum()/asum
+                                    cy=cindices[1].sum()/asum
+                                    v=Vector((cx-r,cy-r))
+                                    print(v,r)
+                                    v.length=max(1,r-v.length)
+                                    xs-=v.x
+                                    ys-=v.y
+                                '''
                             if avoidar[xs, ys] == 0:
 
                                 # print(toomuchpix,ar[xs-r:xs-r+d,ys-r:ys-r+d].sum()*pi/4,satisfypix)
@@ -1345,7 +1345,7 @@ def imageToChunks(o, image, with_border=False):
     borderspread = 2  # o.cutter_diameter/o.pixsize#when the border was excluded precisely, sometimes it did remove some silhouette parts
     r = o.borderwidth - borderspread  # to prevent outline of the border was 3 before and also (o.cutter_diameter/2)/pixsize+o.borderwidth
     if with_border:
-        #	print('border')
+        #    print('border')
         r = 0  # o.borderwidth/2
     w = image.shape[0]
     h = image.shape[1]
@@ -1539,59 +1539,59 @@ def getSampleImage(s, sarray, minz):
         maxx = minx + 1
         # maxx=ceil(x)
         # if maxx==minx:
-        #	maxx+=1
+        #    maxx+=1
         miny = floor(y)
         maxy = miny + 1
         # maxy=ceil(y)
         # if maxy==miny:
-        #	maxy+=1
+        #    maxy+=1
         # if maxx-1!=minx or maxy-1!=miny:
-        #	print('not right')
+        #    print('not right')
 
         '''
-		s1a=sarray[minx,miny]#
-		s2a=sarray[maxx,miny]
-		s1b=sarray[minx,maxy]
-		s2b=sarray[maxx,maxy]
-		'''
+        s1a=sarray[minx,miny]#
+        s2a=sarray[maxx,miny]
+        s1b=sarray[minx,maxy]
+        s2b=sarray[maxx,maxy]
+        '''
         # if bpy.app.debug_value == 0:
         s1a = sarray.item(minx, miny)  # most optimal access to array so far
         s2a = sarray.item(maxx, miny)
         s1b = sarray.item(minx, maxy)
         s2b = sarray.item(maxx, maxy)
         # elif 0:#bpy.app.debug_value >0:
-        #	sar=sarray[minx:maxx+1,miny:maxy]
-        #	s1a=sar.item(0,0)
-        #	s2a=sar.item(1,0)
-        #	s1b=sar.item(0,1)
-        #	s2b=sar.item(1,1)
+        #    sar=sarray[minx:maxx+1,miny:maxy]
+        #    s1a=sar.item(0,0)
+        #    s2a=sar.item(1,0)
+        #    s1b=sar.item(0,1)
+        #    s2b=sar.item(1,1)
         # elif bpy.app.debug_value >0:
-        #	s1a,s2a,s1b,s2b=sarray[minx:maxx+1,miny:maxy+1]
+        #    s1a,s2a,s1b,s2b=sarray[minx:maxx+1,miny:maxy+1]
         # if s1a==minz and s2a==minz and s1b==minz and s2b==minz:
         #  return
         '''
-		if min(s1a,s2a,s1b,s2b)<-10:
-			#return -10
-			if s1a<-10:
-				s1a=s2a
-			if s2a<-10:
-				s2a=s1a
-			if s1b<-10:
-				s1b=s2b
-			if s2b<-10:
-				s2b=s1b
+        if min(s1a,s2a,s1b,s2b)<-10:
+            #return -10
+            if s1a<-10:
+                s1a=s2a
+            if s2a<-10:
+                s2a=s1a
+            if s1b<-10:
+                s1b=s2b
+            if s2b<-10:
+                s2b=s1b
 
-			sa=s1a*(maxx-x)+s2a*(x-minx)
-			sb=s1b*(maxx-x)+s2b*(x-minx)
-			if sa<-10:
-				sa=sb
-			if sb<-10:
-				sb=sa
-			z=sa*(maxy-y)+sb*(y-miny)
-			return z
+            sa=s1a*(maxx-x)+s2a*(x-minx)
+            sb=s1b*(maxx-x)+s2b*(x-minx)
+            if sa<-10:
+                sa=sb
+            if sb<-10:
+                sb=sa
+            z=sa*(maxy-y)+sb*(y-miny)
+            return z
 
-		else:
-		'''
+        else:
+        '''
         sa = s1a * (maxx - x) + s2a * (x - minx)
         sb = s1b * (maxx - x) + s2b * (x - minx)
         z = sa * (maxy - y) + sb * (y - miny)

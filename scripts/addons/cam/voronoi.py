@@ -35,30 +35,30 @@
 #
 # For programmatic use two functions are available:
 #
-#	computeVoronoiDiagram(points, xBuff, yBuff, polygonsOutput=False, formatOutput=False) :
-#	Takes :
-#		- a list of point objects (which must have x and y fields).
-#		- x and y buffer values which are the expansion percentages of the bounding box rectangle including all input points.
-#		Returns :
-#		- With default options :
-#		  A list of 2-tuples, representing the two points of each Voronoi diagram edge.
-#		  Each point contains 2-tuples which are the x,y coordinates of point.
-#		  if formatOutput is True, returns :
-#				- a list of 2-tuples, which are the x,y coordinates of the Voronoi diagram vertices.
-#				- and a list of 2-tuples (v1, v2) representing edges of the Voronoi diagram.
-#				  v1 and v2 are the indices of the vertices at the end of the edge.
-#		- If polygonsOutput option is True, returns :
-#		  A dictionary of polygons, keys are the indices of the input points,
-#		  values contains n-tuples representing the n points of each Voronoi diagram polygon.
-#		  Each point contains 2-tuples which are the x,y coordinates of point.
-#		  if formatOutput is True, returns :
-#				- A list of 2-tuples, which are the x,y coordinates of the Voronoi diagram vertices.
-#				- and a dictionary of input points indices. Values contains n-tuples representing the n points of each Voronoi diagram polygon.
-#				  Each tuple contains the vertex indices of the polygon vertices.
+#    computeVoronoiDiagram(points, xBuff, yBuff, polygonsOutput=False, formatOutput=False) :
+#    Takes :
+#        - a list of point objects (which must have x and y fields).
+#        - x and y buffer values which are the expansion percentages of the bounding box rectangle including all input points.
+#        Returns :
+#        - With default options :
+#          A list of 2-tuples, representing the two points of each Voronoi diagram edge.
+#          Each point contains 2-tuples which are the x,y coordinates of point.
+#          if formatOutput is True, returns :
+#                - a list of 2-tuples, which are the x,y coordinates of the Voronoi diagram vertices.
+#                - and a list of 2-tuples (v1, v2) representing edges of the Voronoi diagram.
+#                  v1 and v2 are the indices of the vertices at the end of the edge.
+#        - If polygonsOutput option is True, returns :
+#          A dictionary of polygons, keys are the indices of the input points,
+#          values contains n-tuples representing the n points of each Voronoi diagram polygon.
+#          Each point contains 2-tuples which are the x,y coordinates of point.
+#          if formatOutput is True, returns :
+#                - A list of 2-tuples, which are the x,y coordinates of the Voronoi diagram vertices.
+#                - and a dictionary of input points indices. Values contains n-tuples representing the n points of each Voronoi diagram polygon.
+#                  Each tuple contains the vertex indices of the polygon vertices.
 #
-#	computeDelaunayTriangulation(points):
-#		Takes a list of point objects (which must have x and y fields).
-#		Returns a list of 3-tuples: the indices of the points that form a Delaunay triangle.
+#    computeDelaunayTriangulation(points):
+#        Takes a list of point objects (which must have x and y fields).
+#        Returns a list of 3-tuples: the indices of the points that form a Delaunay triangle.
 #
 #############################################################################
 import math
@@ -83,7 +83,7 @@ class Context(object):
         self.triangulate = False
         self.vertices = []  # list of vertex 2-tuples: (x,y)
         self.lines = []  # equation of line 3-tuple (a b c), for the equation of the line a*x+b*y = c
-        self.edges = []  # edge 3-tuple: (line index, vertex 1 index, vertex 2 index)	if either vertex index is -1, the edge extends to infinity
+        self.edges = []  # edge 3-tuple: (line index, vertex 1 index, vertex 2 index) if either vertex index is -1, the edge extends to infinity
         self.triangles = []  # 3-tuple of vertex indices
         self.polygons = {}  # a dict of site:[edges] pairs
 

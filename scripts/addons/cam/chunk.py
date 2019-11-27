@@ -10,7 +10,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -153,12 +153,12 @@ class camPathChunk:
 
     # replaced with getNextClosest
     # def getNext(self):#this should be deprecated after reworking sortchunks a bit
-    #	for child in self.children:
-    #		if child.sorted==False:
-    #			#unsortedchildren=True
-    #			return child.getNext()
+    #    for child in self.children:
+    #        if child.sorted==False:
+    #            #unsortedchildren=True
+    #            return child.getNext()
     # self.unsortedchildren=False
-    #	return self
+    #    return self
 
     def getNextClosest(self, o, pos):
         # finds closest chunk that can be milled, when inside sorting hierarchy.
@@ -288,7 +288,7 @@ class camPathChunk:
                 i = 0
                 rounds += 1
         # if not o.use_layers:
-        #	endpoint=0
+        #    endpoint=0
         if endpoint != None:  # append final contour on the bottom z level
             i = endpoint
             started = False
@@ -668,31 +668,31 @@ def parentChildDist(parents, children, o, distance=None):
 
 '''
 def parentChildDist(parents, children,o, distance= None):
-	#parenting based on distance between chunks
-	#hierarchy works like this: - children get milled first.
-	if distance==None:
-		dlim=o.dist_between_paths*2
-		if (o.strategy=='PARALLEL' or o.strategy=='CROSS') and o.parallel_step_back:
-			dlim=dlim*2
-	else:
-		dlim = distance
+    #parenting based on distance between chunks
+    #hierarchy works like this: - children get milled first.
+    if distance==None:
+        dlim=o.dist_between_paths*2
+        if (o.strategy=='PARALLEL' or o.strategy=='CROSS') and o.parallel_step_back:
+            dlim=dlim*2
+    else:
+        dlim = distance
 
-	for child in children:
-		for parent in parents:
-			isrelation=False
-			if parent!=child:
-				for v in child.points:
-					for v1 in parent.points:
+    for child in children:
+        for parent in parents:
+            isrelation=False
+            if parent!=child:
+                for v in child.points:
+                    for v1 in parent.points:
 
-						if dist2d(v,v1)<dlim:
-							isrelation=True
-							break
-					if isrelation:
-						break
-				if isrelation:
-					#print('truelink',dist2d(v,v1))
-					parent.children.append(child)
-					child.parents.append(parent)
+                        if dist2d(v,v1)<dlim:
+                            isrelation=True
+                            break
+                    if isrelation:
+                        break
+                if isrelation:
+                    #print('truelink',dist2d(v,v1))
+                    parent.children.append(child)
+                    child.parents.append(parent)
 '''
 
 
@@ -880,7 +880,7 @@ def chunksToShapely(chunks):  # this does more cleve chunks to Poly with hierarc
             # ch.poly.simplify()#TODO:THIS CHECK
             returnpolys.append(ch.poly)
     # if len(ch.poly.interiors)>0:
-    #	print(ch.poly.interiors[0].coords[0])
+    #    print(ch.poly.interiors[0].coords[0])
     # polygon_utils_cam.shapelyToCurve('test',ch.poly,0)
     # print(ch.poly.boundary)
     # print('shapely hierarchies')
@@ -1012,7 +1012,7 @@ def meshFromCurve(o, use_modifiers=False):
 def curveToChunks(o, use_modifiers=False):
     co = meshFromCurve(o, use_modifiers)
     # if co.type!='MESH':
-    #	return []
+    #    return []
     chunks = meshFromCurveToChunk(co)
 
     co = bpy.context.active_object
@@ -1061,7 +1061,7 @@ def chunkToShapely(chunk):
 
     # for v in chunk.points:
 
-    #	pverts.append((v[0],v[1]))
+    #    pverts.append((v[0],v[1]))
 
     p = spolygon.Polygon(chunk.points)
     return p

@@ -28,8 +28,8 @@ class Creator(iso_modal.Creator):
             return('M02')
 
     def dwell(self, t):
-    	self.write('\n')
-    	iso_modal.Creator.dwell(self, t)
+        self.write('\n')
+        iso_modal.Creator.dwell(self, t)
 ############################################################################
 ## Begin Program
 
