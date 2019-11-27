@@ -545,9 +545,9 @@ def numpysave(a,iname):
     i.save_render(iname)
 
 def numpytoimage(a,iname):
-    t=time.time()
+    t=time.perf_counter()
     print('numpy to image')
-    t=time.time()
+    t=time.perf_counter()
     print(a.shape[0],a.shape[1])
     foundimage=False
     for image in bpy.data.images:
@@ -569,12 +569,12 @@ def numpytoimage(a,iname):
     a[3::4]=1
     #i.pixels=a
     i.pixels[:]=a[:]#this gives big speedup!
-    print('\ntime '+str(time.time()-t))
+    print('\ntime '+str(time.perf_counter()-t))
     return i
 
 
 def imagetonumpy(i):
-    t=time.time()
+    t=time.perf_counter()
     inc=0
 
     width=i.size[0]
@@ -594,7 +594,7 @@ def imagetonumpy(i):
     na=na.reshape(height,width)
     na=na.swapaxes(0,1)
 
-    print('\ntime of image to numpy '+str(time.time()-t))
+    print('\ntime of image to numpy '+str(time.perf_counter()-t))
     return na
 
 def tonemap(i):
@@ -603,7 +603,7 @@ def tonemap(i):
     i[:]=((i-minheight))/(maxheight-minheight)
 
 def problemAreas(br):
-    t=time.time()
+    t=time.perf_counter()
 
     i=bpy.data.images[br.source_image_name]
     silh_thres=br.silhouette_threshold
@@ -688,7 +688,7 @@ def problemAreas(br):
 
 
 def relief(br):
-    t=time.time()
+    t=time.perf_counter()
 
     i=bpy.data.images[br.source_image_name]
     silh_thres=br.silhouette_threshold
@@ -830,7 +830,7 @@ def relief(br):
 
     ipath=bpy.path.abspath(i.filepath)[:-len(bpy.path.basename(i.filepath))]+br.output_image_name+'.exr'
     numpysave(target,ipath)
-    t=time.time()-t
+    t=time.perf_counter()-t
     print('total time:'+ str(t)+'\n')
     #numpytoimage(target,br.output_image_name)
 

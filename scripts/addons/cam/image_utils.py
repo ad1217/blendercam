@@ -154,7 +154,7 @@ def numpysave(a, iname):
 
 def numpytoimage(a, iname):
     print('numpy to image', iname)
-    t = time.time()
+    t = time.perf_counter()
     print(a.shape[0], a.shape[1])
     foundimage = False
 
@@ -178,12 +178,12 @@ def numpytoimage(a, iname):
     a[3::4] = 1
     # i.pixels=a this was 50 percent slower...
     i.pixels[:] = a[:]  # this gives big speedup!
-    print('\ntime ' + str(time.time() - t))
+    print('\ntime ' + str(time.perf_counter() - t))
     return i
 
 
 def imagetonumpy(i):
-    t = time.time()
+    t = time.perf_counter()
     inc = 0
 
     width = i.size[0]
@@ -204,7 +204,7 @@ def imagetonumpy(i):
     na = na.reshape(height, width)
     na = na.swapaxes(0, 1)
 
-    print('\ntime of image to numpy ' + str(time.time() - t))
+    print('\ntime of image to numpy ' + str(time.perf_counter() - t))
     return na
 
 
@@ -223,7 +223,7 @@ def offsetArea(o, samples):
         height = len(sourceArray[0])
         cwidth = len(cutterArray)
 
-        t = time.time()
+        t = time.perf_counter()
 
         m = int(cwidth / 2.0)
 
@@ -258,7 +258,7 @@ def offsetArea(o, samples):
         o.offset_image[m: width - cwidth + m, m:height - cwidth + m] = comparearea
         # progress('offseting done')
 
-        progress('\ntime ' + str(time.time() - t))
+        progress('\ntime ' + str(time.perf_counter() - t))
 
         o.update_offsetimage_tag = False
     # progress('doing offsetimage')
@@ -270,7 +270,7 @@ def offsetArea(o, samples):
 deprecated function, currently not used anywhere inside blender CAM.
 def outlineImageBinary(o,radius,i,offset):
     '''takes a binary image, and performs offset on it, something like delate/erode, just with circular patter. The oldest offset solution in Blender CAM. '''
-    t=time.time()
+    t=time.perf_counter()
     progress('outline image')
     r=ceil(radius/o.pixsize)
     c=getCircleBinary(r)
@@ -303,13 +303,13 @@ def outlineImageBinary(o,radius,i,offset):
         if a>r and b>r and a<w-r and b<h-r:
             #progress(oar.shape,c.shape)
             oar[a-r:a+r,b-r:b+r]=dofunc(oar[a-r:a+r,b-r:b+r],c)
-    progress(time.time()-t)
+    progress(time.perf_counter()-t)
     return oar
 
 def outlineImage(o,radius,i,minz):
     '''takes a binary image, and performs offset on it, something like delate/erode, just with circular patter. The oldest offset solution in Blender CAM. was used to add ambient to the operation in the image based method'''
     minz=minz-0.0000001#correction test
-    t=time.time()
+    t=time.perf_counter()
     progress('outline image')
     r=ceil(radius/o.pixsize)
     c=getCircle(r,minz)
@@ -324,7 +324,7 @@ def outlineImage(o,radius,i,minz):
             p3=i[a,b+1]
             if p1<minz<p2 or p1>minz>p2 or p1<minz<p3 or p1>minz>p3:
                 oar[a-r:a+r,b-r:b+r]=numpy.maximum(oar[a-r:a+r,b-r:b+r],c)
-    progress(time.time()-t)
+    progress(time.perf_counter()-t)
     return oar
 """
 
@@ -380,7 +380,7 @@ def getOffsetImageCavities(o, i):  # for pencil operation mainly
 
 
 def imageEdgeSearch_online(o, ar, zimage):  # search edges for pencil strategy, another try.
-    t = time.time()
+    t = time.perf_counter()
     minx, miny, minz, maxx, maxy, maxz = o.min.x, o.min.y, o.min.z, o.max.x, o.max.y, o.max.z
     pixsize = o.pixsize
     edges = []
@@ -568,7 +568,7 @@ def generateSimulationImage(operations, limits):
     # print(minx,miny,minz,maxx,maxy,maxz)
     sx = maxx - minx
     sy = maxy - miny
-    t = time.time()
+    t = time.perf_counter()
     o = operations[0]  # getting sim detail and others from first op.
     simulation_detail = o.simulation_detail
     borderwidth = o.borderwidth
@@ -749,7 +749,7 @@ def generateSimulationImage(operations, limits):
 
     # print(si.shape[0],si.shape[1])
 
-    # print('simulation done in %f seconds' % (time.time()-t))
+    # print('simulation done in %f seconds' % (time.perf_counter()-t))
     return si
 
 
@@ -808,7 +808,7 @@ def testStrokeBinary(img, stroke):
 
 def crazyStrokeImage(
         o):  # this surprisingly works, and can be used as a basis for something similar to adaptive milling strategy.
-    t = time.time()
+    t = time.perf_counter()
     minx, miny, minz, maxx, maxy, maxz = o.min.x, o.min.y, o.min.z, o.max.x, o.max.y, o.max.z
     pixsize = o.pixsize
     edges = []
@@ -1016,7 +1016,7 @@ def crazyStrokeImageBinary(o, ar,
     # try to go in various directions.
     # if somewhere the cutter load is appropriate - it is correct magnitude and side, continue in that directon
     # try to continue straight or around that, looking
-    t = time.time()
+    t = time.perf_counter()
     minx, miny, minz, maxx, maxy, maxz = o.min.x, o.min.y, o.min.z, o.max.x, o.max.y, o.max.z
     pixsize = o.pixsize
     edges = []
@@ -1333,7 +1333,7 @@ def crazyStrokeImageBinary(o, ar,
 
 
 def imageToChunks(o, image, with_border=False):
-    t = time.time()
+    t = time.perf_counter()
     minx, miny, minz, maxx, maxy, maxz = o.min.x, o.min.y, o.min.z, o.max.x, o.max.y, o.max.z
     pixsize = o.pixsize
 
@@ -1380,8 +1380,8 @@ def imageToChunks(o, image, with_border=False):
         verts1.append(e[1])
         verts2.append(e[0])
 
-    # progress(time.time()-t)
-    t = time.time()
+    # progress(time.perf_counter()-t)
+    t = time.perf_counter()
     if len(edges) > 0:
 
         ch = [edges[0][0], edges[0][1]]  # first and his reference
@@ -1491,7 +1491,7 @@ def imageToChunks(o, image, with_border=False):
                 (ch[i][0] + coef - o.borderwidth) * pixsize + minx, (ch[i][1] + coef - o.borderwidth) * pixsize + miny,
                 0)
                 vecchunk.append(Vector(ch[i]))
-        t = time.time()
+        t = time.perf_counter()
         # print('optimizing outline')
 
         # print('directsimplify')
@@ -1522,7 +1522,7 @@ def imageToShapely(o, i, with_border=False):
     polychunks = imageToChunks(o, i, with_border)
     polys = chunksToShapely(polychunks)
 
-    t = time.time()
+    t = time.perf_counter()
 
     return polys  # [polys]
 
@@ -1611,7 +1611,7 @@ def getResolution(o):
 # this basically renders blender zbuffer and makes it accessible by saving & loading it again.
 # that's because blender doesn't allow accessing pixels in render :(
 def renderSampleImage(o):
-    t = time.time()
+    t = time.perf_counter()
     progress('getting zbuffer')
     # print(o.zbuffer_image)
 
@@ -1778,7 +1778,7 @@ def renderSampleImage(o):
         print('min image ', numpy.min(a))
         o.zbuffer_image = a
     # progress('got z buffer also with conversion in:')
-    progress(time.time() - t)
+    progress(time.perf_counter() - t)
 
     # progress(a)
     o.update_zbufferimage_tag = False

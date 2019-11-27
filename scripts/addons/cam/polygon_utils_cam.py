@@ -70,7 +70,7 @@ def shapelyRemoveDoubles(p, optimize_threshold):
             pnew.addContour(nc, p.isHole(ci))
         else:
             pnew.addContour(p[ci], p.isHole(ci))
-    # progress(time.time()-t)
+    # progress(time.perf_counter()-t)
     return pnew
 
 

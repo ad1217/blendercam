@@ -74,7 +74,7 @@ def positionObject(operation):
 
 def getBoundsWorldspace(obs, use_modifiers=False):
     # progress('getting bounds of object(s)')
-    t = time.time()
+    t = time.perf_counter()
 
     maxx = maxy = maxz = -10000000
     minx = miny = minz = 10000000
@@ -155,7 +155,7 @@ def getBoundsWorldspace(obs, use_modifiers=False):
                     maxx = max(maxx, worldCoord.x)
                     maxy = max(maxy, worldCoord.y)
                     maxz = max(maxz, worldCoord.z)
-    # progress(time.time()-t)
+    # progress(time.perf_counter()-t)
     return minx, miny, minz, maxx, maxy, maxz
 
 
@@ -187,7 +187,7 @@ def getSplineBounds(ob, curve):
         maxx = max(maxx, worldCoord.x)
         maxy = max(maxy, worldCoord.y)
         maxz = max(maxz, worldCoord.z)
-    # progress(time.time()-t)
+    # progress(time.perf_counter()-t)
     return minx, miny, minz, maxx, maxy, maxz
 
 
@@ -397,7 +397,7 @@ def sampleChunks(o, pathSamples, layers):
         res = ceil(o.cutter_diameter / o.pixsize)
         m = res / 2
 
-    t = time.time()
+    t = time.perf_counter()
     # print('sampling paths')
 
     totlen = 0;  # total length of all chunks, to estimate sampling time.
@@ -623,7 +623,7 @@ def sampleChunksNAxis(o, pathSamples, layers):
     cutter = o.cutter_shape
     cutterdepth = cutter.dimensions.z / 2
 
-    t = time.time()
+    t = time.perf_counter()
     print('sampling paths')
 
     totlen = 0  # total length of all chunks, to estimate sampling time.
@@ -953,7 +953,7 @@ def extendChunks5axis(chunks, o):
 
 def chunksToMesh(chunks, o):
     '''convert sampled chunks to path, optimization of paths'''
-    t = time.time()
+    t = time.perf_counter()
     s = bpy.context.scene
     m = s.cam_machine
     verts = []
@@ -1049,8 +1049,8 @@ def chunksToMesh(chunks, o):
     # print(verts_rotations)
     if o.use_exact and not o.use_opencamlib:
         cleanupBulletCollision(o)
-    print(time.time() - t)
-    t = time.time()
+    print(time.perf_counter() - t)
+    t = time.perf_counter()
 
     # actual blender object generation starts here:
     edges = []
@@ -1086,7 +1086,7 @@ def chunksToMesh(chunks, o):
 
             shapek.data[i].co = co
 
-    print(time.time() - t)
+    print(time.perf_counter() - t)
 
     ob.location = (0, 0, 0)
     o.path_object_name = oname
@@ -1104,7 +1104,7 @@ def exportGcodePath(filename, vertslist, operations):
     '''exports gcode with the heeks nc adopted library.'''
     print("EXPORT")
     progress('exporting gcode file')
-    t = time.time()
+    t = time.perf_counter()
     s = bpy.context.scene
     m = s.cam_machine
 
@@ -1431,7 +1431,7 @@ def exportGcodePath(filename, vertslist, operations):
 
     c.program_end()
     c.file_close()
-    print(time.time() - t)
+    print(time.perf_counter() - t)
 
 
 def curveToShapely(cob, use_modifiers=False):
@@ -1782,7 +1782,7 @@ def getObjectSilhouete(stype, objects=None, use_modifiers=False):
             totfaces += len(ob.data.polygons)
 
         if totfaces < 20000000:  # boolean polygons method originaly was 20 000 poly limit, now limitless, it might become teribly slow, but who cares?
-            t = time.time()
+            t = time.perf_counter()
             print('shapely getting silhouette')
             polys = []
             for ob in objects:
@@ -1843,9 +1843,9 @@ def getObjectSilhouete(stype, objects=None, use_modifiers=False):
                 print('joining')
                 p = sops.unary_union(bigshapes)
 
-            print(time.time() - t)
+            print(time.perf_counter() - t)
 
-            t = time.time()
+            t = time.perf_counter()
             silhouete = [p]  # [polygon_utils_cam.Shapely2Polygon(p)]
 
     return silhouete
@@ -3034,7 +3034,7 @@ def getPath3axis(context, operation):
 
     elif o.strategy == 'WATERLINE' and not o.use_opencamlib:
         topdown = True
-        tw = time.time()
+        tw = time.perf_counter()
         chunks = []
         progress('retrieving object slices')
         prepareArea(o)
@@ -3228,7 +3228,7 @@ def getPath3axis(context, operation):
                         chi=chi-1
                     chi+=1
             '''
-        print(time.time() - tw)
+        print(time.perf_counter() - tw)
         chunksToMesh(chunks, o)
 
     elif o.strategy == 'DRILL':
@@ -3272,7 +3272,6 @@ def checkEqual(lst):
 
 
 def getPath4axis(context, operation):
-    t = time.clock()
     s = bpy.context.scene
     o = operation
     getBounds(o)
@@ -3411,7 +3410,7 @@ def rotTo2axes(e, axescombination):
 
 
 def getPath(context, operation):  # should do all path calculations.
-    t = time.clock()
+    t = time.perf_counter()
     # print('ahoj0')
     if shapely.speedups.available:
         shapely.speedups.enable()
@@ -3459,7 +3458,7 @@ def getPath(context, operation):  # should do all path calculations.
         exportGcodePath(operation.filename, [p.data], [operation])
 
     operation.changed = False
-    t1 = time.clock() - t
+    t1 = time.perf_counter() - t
     progress('total time', t1)
 
 

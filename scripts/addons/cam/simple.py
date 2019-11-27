@@ -49,12 +49,12 @@ def timinginit():
 
 
 def timingstart(tinf):
-    t = time.time()
+    t = time.perf_counter()
     tinf[1] = t
 
 
 def timingadd(tinf):
-    t = time.time()
+    t = time.perf_counter()
     tinf[0] += t - tinf[1]
 
 

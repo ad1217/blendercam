@@ -147,7 +147,7 @@ def prepareBulletCollision(o):
     progress('preparing collisions')
 
     print(o.name)
-    t = time.time()
+    t = time.perf_counter()
     s = bpy.context.scene
     s.gravity = (0, 0, 0)
     # cleanup rigidbodies wrongly placed somewhere in the scene
@@ -213,7 +213,7 @@ def prepareBulletCollision(o):
     bpy.context.scene.frame_set(0)
     bpy.context.scene.frame_set(1)
     bpy.context.scene.frame_set(2)
-    progress(time.time() - t)
+    progress(time.perf_counter() - t)
 
 
 def cleanupBulletCollision(o):

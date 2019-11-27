@@ -60,7 +60,7 @@ def srotate(s, r, x, y):
 def packCurves():
     if speedups.available:
         speedups.enable()
-    t = time.time()
+    t = time.perf_counter()
     packsettings = bpy.context.scene.cam_pack
 
     sheetsizex = packsettings.sheet_x
@@ -219,7 +219,7 @@ def packCurves():
                 if rotate: rot += rotchange
             iter += 1
         i += 1
-    t = time.time() - t
+    t = time.perf_counter() - t
 
     polygon_utils_cam.shapelyToCurve('test', sgeometry.MultiPolygon(placedpolys), 0)
     print(t)

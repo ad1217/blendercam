@@ -327,7 +327,7 @@ def getBoundsWorldspace(ob):
         maxy=max(maxy,worldCoord.y)
         maxz=max(maxz,worldCoord.z)
 
-    #progress(time.time()-t)
+    #progress(time.perf_counter()-t)
     return minx,miny,minz,maxx,maxy,maxz
 
 def getBoundsSpline(s):
@@ -357,7 +357,7 @@ def getBoundsSpline(s):
         maxx=max(maxx,p.co.x)
         maxy=max(maxy,p.co.y)
         maxz=max(maxz,p.co.z)
-    #progress(time.time()-t)
+    #progress(time.perf_counter()-t)
     return minx,miny,minz,maxx,maxy,maxz
 
 def getInstances(obs):

@@ -162,7 +162,7 @@ def getPathPatternParallel(o,angle):
 
 def getPathPattern(operation):
     o=operation
-    t=time.time()
+    t=time.perf_counter()
     progress('building path pattern')
     minx,miny,minz,maxx,maxy,maxz=o.min.x,o.min.y,o.min.z,o.max.x,o.max.y,o.max.z
 
@@ -426,12 +426,12 @@ def getPathPattern(operation):
 
         #parentChildPoly(pathchunks,pathchunks,o)
         chunksRefine(pathchunks,o)
-    progress(time.time()-t)
+    progress(time.perf_counter()-t)
     return pathchunks
 
 def getPathPattern4axis(operation):
     o=operation
-    t=time.time()
+    t=time.perf_counter()
     progress('building path pattern')
     minx,miny,minz,maxx,maxy,maxz=o.min.x,o.min.y,o.min.z,o.max.x,o.max.y,o.max.z
     pathchunks=[]
